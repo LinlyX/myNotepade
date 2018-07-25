@@ -18,19 +18,19 @@
 
         <n-table @deldialog="delData" :is-show="table" @close="table = false"></n-table>
         <n-theme :is-show="theme" @close="theme = false"></n-theme>
-        <n-footer></n-footer>
+        <todo></todo>
     </div>
 </template>
 
 <script>
-import nHeader from './components/header.vue'
-import nFooter from './components/footer.vue'
-import nAdd from './components/event_add.vue'
-import nTable from './components/event_table.vue'
-import nList from './components/event_list.vue'
-import nSidebar from './components/sidebar.vue'
-import nDialog from './components/dialog.vue'
-import nTheme from './components/theme.vue'
+import nHeader from './layout/header.vue'
+import nAdd from './layout/event_add.vue'
+import nTable from './layout/event_table.vue'
+import nList from './layout/event_list.vue'
+import nSidebar from './layout/sidebar.vue'
+import nDialog from './layout/dialog.vue'
+import nTheme from './layout/theme.vue'
+import Todo from './layout/todo/todo.vue'
 
 export default {
   data () {
@@ -48,7 +48,7 @@ export default {
     }
   },
   components: {
-    nHeader, nAdd, nSidebar, nDialog, nTable, nList, nTheme, nFooter
+    nHeader, nAdd, nSidebar, nDialog, nTable, nList, nTheme, Todo
   },
   computed: {
     getTheme () { // 获取主题色
