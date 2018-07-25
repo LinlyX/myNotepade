@@ -23,17 +23,9 @@ export default {
       this.$parent.onChange(this.index)
     }
   },
-  // beforeMount () {
-  //   console.log('----------------tab beforemounted-------------')
-  // },
   mounted () {
     this.$parent.panes.push(this)
-    // console.log(this)
-    // console.log('----------------tab mounted-------------')
   },
-  // created () {
-  //   console.log('----------------tab created-------------')
-  // },
   render () {
     const tab = this.$slots.lable || <span>{this.lable}</span>
     const classNames = {
@@ -47,7 +39,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
 .tab{
   list-style: none;
   line-height: 40px;
@@ -56,10 +48,10 @@ export default {
   bottom: -2px;
   cursor: pointer;
   &.active{
-    border-bottom: 2px solid blue;
+    border-bottom: 2px solid #00b0f0;
   }
   &:last-child{
-    margin-right: 0
+    margin-right: 0;
   }
 }
 </style>

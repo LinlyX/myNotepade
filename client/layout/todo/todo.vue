@@ -8,7 +8,7 @@
         <input
            type="text"
            class="add-input"
-           placeholder="接下来要做的事情"
+           placeholder="代办事项"
            autofocus="autofocus"
            @keyup.enter="addTodo">
         <item v-for="todo in filterTodos"
@@ -128,8 +128,8 @@ export default {
 <style lang="scss" scope>
 .real-app {
     max-width: 770px;
-    margin: 0 auto;
-    box-shadow: 0 0 5px #666;
+    margin: 36px auto;
+    box-shadow: 0 0 10px #00b0f0;
     padding: 0 15px;
     box-sizing: border-box;
 }
@@ -137,7 +137,7 @@ export default {
     position: relative;
     margin: 0;
     width: 100%;
-    font-size: 24px;
+    font-size: 16px;
     font-family: "微软雅黑";
     font-weight: normal;
     line-height: 1.4em;

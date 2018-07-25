@@ -1,27 +1,33 @@
 <template>
   <div :class="['todo-item',filter==='已完成'?'completed':'']">
-    <div v-show="filter==='未完成'">
-      <input
-        type="checkbox"
-        class="toggle"
-        v-model="todo.completed"
-        @click="toggleToCompleted"
-      >
-      <label>{{todo.content}}</label>
+    <div v-show="filter==='未完成'" class="flexItem">
+      <div class="itemLeft">
+        <input
+          type="checkbox"
+          class="toggle"
+          v-model="todo.completed"
+          @click="toggleToCompleted"
+        >
+        <label>{{todo.content}}</label>
+      </div>
       <button class="destroy" @click.prevent="cancelTodo"></button>
     </div>
-    <div v-show="filter==='已完成'">
-      <input
-        type="checkbox"
-        class="toggle"
-        v-model="todo.completed"
-        @click="toggleTodo"
-      >
-      <label>{{todo.content}}</label>
-      <span class="event-time">{{todo.time}}</span>
+    <div v-show="filter==='已完成'" class="flexItem">
+      <div class="itemLeft">
+        <input
+          type="checkbox"
+          class="toggle"
+          v-model="todo.completed"
+          @click="toggleTodo"
+        >
+        <label>{{todo.content}}</label>
+      </div>
+      <p class="event-time">{{todo.time}}</p>
     </div>
-    <div v-show="filter==='已取消'">
-      <label>{{todo.content}}</label>
+    <div v-show="filter==='已取消'" class="flexItem">
+      <div class="itemLeft">
+        <label>{{todo.content}}</label>
+      </div>
       <button class="recoverBtn" @click.prevent="backTodo">恢复</button>
     </div>
   </div>
@@ -58,11 +64,24 @@ export default{
 </script>
 
 <style lang="scss" scoped>
+  .flexItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 46px;
+    .itemLeft {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
   .todo-item {
     position: relative;
     background-color: #fff;
-    font-size: 24px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    height: 46px
   }
 
   .todo-item:hover .destroy:after {
@@ -72,11 +91,11 @@ export default{
   .todo-item label {
     white-space: pre-line;
     word-break: break-all;
-    padding: 15px 60px 15px 15px;
     margin-left: 45px;
     display: block;
-    line-height: 1.2em;
     transition: color 0.4s;
+    font-size: 16px;
+    padding-left: 5px;
   }
 
   .todo-item .completed label {
@@ -96,8 +115,8 @@ export default{
     border: none;
     -webkit-appearance: none;
     outline: none;
-    padding-left: 5px;
     cursor: pointer;
+    padding-left: 5px;
   }
 
   .toggle:after {
@@ -144,10 +163,6 @@ export default{
   }
 
   .event-time {
-    position: absolute;
-    right: 10px;
-    top: 0;
-    line-height: 44px;
     font-size: 12px;
     color: #aaa;
   }

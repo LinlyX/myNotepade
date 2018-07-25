@@ -2,8 +2,7 @@
     <div id="app" :class="[getTheme]">
         <n-header @tools="changePages"></n-header>
         <section class="container" :class="{'hide': table}">
-            <n-add></n-add>
-            <n-list></n-list>
+            <todo></todo>
             <n-sidebar :is-show="tools"
                        @cleardialog="clearData"
                        @uploadData="uploadData"
@@ -18,15 +17,12 @@
 
         <n-table @deldialog="delData" :is-show="table" @close="table = false"></n-table>
         <n-theme :is-show="theme" @close="theme = false"></n-theme>
-        <todo></todo>
     </div>
 </template>
 
 <script>
 import nHeader from './layout/header.vue'
-import nAdd from './layout/event_add.vue'
 import nTable from './layout/event_table.vue'
-import nList from './layout/event_list.vue'
 import nSidebar from './layout/sidebar.vue'
 import nDialog from './layout/dialog.vue'
 import nTheme from './layout/theme.vue'
@@ -48,7 +44,7 @@ export default {
     }
   },
   components: {
-    nHeader, nAdd, nSidebar, nDialog, nTable, nList, nTheme, Todo
+    nHeader, nSidebar, nDialog, nTable, nTheme, Todo
   },
   computed: {
     getTheme () { // 获取主题色
