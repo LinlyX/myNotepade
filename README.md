@@ -1,0 +1,2 @@
+# myNotepade
+尝试使用webpack自己打包vue工程，实现记事本功能；重点在与自己封装了Tabs和Notification全局组件，可移植到任何工程中使用。
