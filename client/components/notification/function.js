@@ -27,7 +27,18 @@ const notify = (options) => {
 
   // new出组件的内容，插入到Dom中，需要控制组件定位，所以要控制组件的样式
   // 定位需要根据当前有多少个N去判断=》用数组去保存列表
-  const instance = new NotificationConstructor(options)
+  const {
+    autoClose,
+    ...rest
+  } = options
+  const instance = new NotificationConstructor({
+    propsData: {
+      ...rest
+    },
+    data: {
+      autoClose: autoClose === undefined ? 3000 : autoClose
+    }
+  })
 
   const id = `notification_${seed++}` // 独一无二的id
   instance.id = id

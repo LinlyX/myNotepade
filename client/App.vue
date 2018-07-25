@@ -11,7 +11,6 @@
             ></n-sidebar>
         </section >
         <transition name="dialog">
-            <!-- <n-dialog :is-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog> -->
             <n-dialog v-show="dialog" :msg="tips" @cancel="dialog = false" @sure="sureDialog"></n-dialog>
         </transition>
 
