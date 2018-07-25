@@ -20,9 +20,8 @@
         }
       },
       computed: {
-        // 过滤得到没有完成的所有事件
         allUnCompletedCounts () {
-          return this.todos.filter(item => item.completed === false).length
+          return this.$store.getters.getToDo.length
         }
       },
       methods: {

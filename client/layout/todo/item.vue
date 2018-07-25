@@ -1,11 +1,29 @@
 <template>
-  <div :class="['todo-item',todo.completed?'completed':'']">
-    <input
-      type="checkbox"
-      class="toggle"
-      v-model="todo.completed">
-    <label>{{todo.content}}</label>
-    <button class="destroy" @click.prevent="deleteTodo"></button>
+  <div :class="['todo-item',filter==='已完成'?'completed':'']">
+    <div v-show="filter==='未完成'">
+      <input
+        type="checkbox"
+        class="toggle"
+        v-model="todo.completed"
+        @click="toggleToCompleted"
+      >
+      <label>{{todo.content}}</label>
+      <button class="destroy" @click.prevent="cancelTodo"></button>
+    </div>
+    <div v-show="filter==='已完成'">
+      <input
+        type="checkbox"
+        class="toggle"
+        v-model="todo.completed"
+        @click="toggleTodo"
+      >
+      <label>{{todo.content}}</label>
+      <span class="event-time">{{todo.time}}</span>
+    </div>
+    <div v-show="filter==='已取消'">
+      <label>{{todo.content}}</label>
+      <button class="recoverBtn" @click.prevent="backTodo">恢复</button>
+    </div>
   </div>
 </template>
 
@@ -15,11 +33,25 @@ export default{
     todo: {
       type: Object,
       required: true
+    },
+    filter: {
+      type: String,
+      required: true
     }
   },
   methods: {
-    deleteTodo (e) {
-      this.$emit('del', this.todo.id)
+    cancelTodo (e) {
+      this.$emit('cancel', this.todo.id)
+    },
+    backTodo (e) {
+      this.$emit('backTo', this.todo.id)
+    },
+    toggleTodo (e) {
+      this.todo.completed = ''
+      this.$emit('backTo', this.todo.id)
+    },
+    toggleToCompleted (e) {
+      this.$emit('completed', this.todo.id)
     }
   }
 }
@@ -94,5 +126,29 @@ export default{
     border-width: 0;
     cursor: pointer;
     outline: none;
+  }
+
+  .recoverBtn {
+    -webkit-appearance: none;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #c0ccda;
+    color: #666;
+    font-size: 12px;
+  }
+
+  .event-time {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    line-height: 44px;
+    font-size: 12px;
+    color: #aaa;
   }
 </style>

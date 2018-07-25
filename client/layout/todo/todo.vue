@@ -14,12 +14,14 @@
         <item v-for="todo in filterTodos"
               :key="todo.id"
               :todo="todo"
-              @del="deleteThis"/>
+              :filter="filter"
+              @cancel="cancelThis"
+              @completed="completedThis"
+              @backTo="todoThis"/>
         <helper
-            :todos="todos"
+            :todos="todoEvents"
             :filter="filter"
             @clearAllCompleted="clearAllCompleted()"/>
-        <!-- <router-view /> -->
     </div>
 </template>
 
@@ -29,7 +31,7 @@ import helper from './helper.vue'
 export default {
   data () {
     return {
-      todos: [],
+      content: '',
       allCounts: 0,
       filter: '未完成',
       id: 0,
@@ -40,46 +42,76 @@ export default {
     item, helper
   },
   computed: {
+    todoEvents () {
+      return this.$store.getters.getToDo
+    },
+    doneEvents () {
+      return this.$store.getters.getDone
+    },
+    cancelEvents () {
+      return this.$store.getters.getCancel
+    },
     filterTodos () {
-      if (this.filter === '未完成') { return this.todos }
-      const completed = this.filter === '已完成'
-      return this.todos.filter(item => item.completed === completed)
+      if (this.filter === '未完成') {
+        return this.todoEvents
+      } else if (this.filter === '已完成') {
+        return this.doneEvents
+      } else if (this.filter === '已取消') {
+        return this.cancelEvents
+      }
     }
   },
   methods: {
     addTodo (e) {
-      if (e.target.value === '') {
-        this.$notify({
-          content: '不能为空！',
-          btn: '关闭'
-        })
-        return
+      let self = this
+      let params = {
+        id: 0,
+        type: 1,
+        content: '',
+        time: ''
       }
-      if (e.target.value !== '') {
-        this.todos.unshift({
-          id: this.id++,
-          content: e.target.value.trim(),
-          completed: false
-        })
+      self.content = e.target.value.trim()
+      if (self.content) {
+        params.content = self.content
+        self.$store.dispatch('addevent', params)
+        self.content = ''
+        e.target.value = ''
         this.$notify({
           content: '您有一件新的代办事项',
           btn: '关闭'
         })
+      } else {
+        this.$notify({
+          content: '输入不能为空！',
+          btn: '关闭'
+        })
       }
-      e.target.value = ''
-      this.allCounts = this.todos.length
     },
-    deleteThis (id) {
-      this.todos.splice(this.todos.findIndex(obj => { return obj.id === id }), 1)
+    cancelThis (id) {
+      this.$store.dispatch('eventcancel', id)
       this.$notify({
         content: '您清除了一件事情',
         btn: '关闭'
       })
     },
+    completedThis (id) {
+      this.$store.dispatch('eventdone', id)
+      this.$notify({
+        content: '您完成了一件事情',
+        btn: '关闭'
+      })
+    },
+    todoThis (id) {
+      this.$store.dispatch('eventtodo', id)
+      this.$notify({
+        content: '您有一件新的代办事项',
+        btn: '关闭'
+      })
+    },
     clearAllCompleted (active) {
-      const ids = this.todos.filter(item => item.completed === true).map(t => t.id) || []
+      const ids = this.doneEvents.map(t => t.id) || []
       for (let i = 0; i < ids.length; i++) {
-        this.todos.splice(this.todos.findIndex(id => { return id === ids[i] }), 1)
+        this.$store.dispatch('delevent', {id: ids[i], index: i})
       }
       this.$notify({
         content: '清除所有已完成事项',

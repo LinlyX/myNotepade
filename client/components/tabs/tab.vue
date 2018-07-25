@@ -36,7 +36,6 @@ export default {
   // },
   render () {
     const tab = this.$slots.lable || <span>{this.lable}</span>
-    console.log(this.lable)
     const classNames = {
       tab: true,
       active: this.active

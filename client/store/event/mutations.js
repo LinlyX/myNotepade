@@ -50,6 +50,9 @@ export default {
     func.local.clear()
   },
   [type.DELEVENT] (states, info) {
+    if (!info.index) {
+      info.index = 0
+    }
     if (states.event[info.index].id === info.id) {
       states.event.splice(info.index, 1)
     } else {
