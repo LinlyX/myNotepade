@@ -68,7 +68,8 @@ export default {
         id: 0,
         type: 1,
         content: '',
-        time: ''
+        time: '',
+        completed: false
       }
       self.content = e.target.value.trim()
       if (self.content) {
